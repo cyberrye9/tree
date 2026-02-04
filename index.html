@@ -6,10 +6,34 @@
 <title>The Markel Conspiracy · An Anatomy of a Murder-for-Hire</title>
 <style>
 /* === UI HINTS (Centered & Styled) === */
+/* === UI HINTS (Centered & Styled) === */
 .interaction-hint {
-  display: none;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-600);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1001;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 1s forwards;
 }
 
+.interaction-hint.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 .hint-icon {
   font-size: 0.9rem;
   opacity: 0.6;
