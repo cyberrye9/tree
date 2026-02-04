@@ -264,13 +264,12 @@ header {
 .canvas-section{
   position: relative;
   width: 100%;
-
-  /* below header */
-  height: calc(100vh - 140px); /* adjust if your header is taller/shorter */
+  height: 75vh;        /* simple + stable */
+  min-height: 620px;   /* keeps it feeling like an app */
   overflow: hidden;
-
   background: var(--white);
 }
+
 
 .tree-viewport {
   position: absolute;
