@@ -1250,7 +1250,6 @@ header {
     </div>
   </div>
 
-</section>
 
 </section>  <!-- end of hero -->
 
@@ -1918,21 +1917,22 @@ function startTour() {
   tourActive = true;
   tourStep = 0;
   document.getElementById('startTour').classList.add('active');
-  document.getElementById('tourProgress').classList.add('visible');
+document.getElementById('tourProgress')?.classList.add('visible');
   goToTourStep(0);
 }
 
 function endTour() {
   tourActive = false;
   document.getElementById('startTour').classList.remove('active');
-  document.getElementById('tourProgress').classList.remove('visible');
+document.getElementById('tourProgress')?.classList.remove('visible');
   resetZoom();
   hideInfo();
 }
 
 function goToTourStep(step) {
   tourStep = step;
-  document.getElementById('tourStep').textContent = `${step + 1} / ${tourStops.length}`;
+const stepEl = document.getElementById('tourStep');
+if (stepEl) stepEl.textContent = `${step + 1} / ${tourStops.length}`;
   const person = document.querySelector(`[data-id="${tourStops[step]}"]`);
   if (person) {
     zoomTo(person, true);
@@ -2025,13 +2025,22 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Tour controls
-document.getElementById('startTour').addEventListener('click', () => {
+// Tour controls (safe even if some buttons aren't in the DOM)
+const startTourBtn = document.getElementById('startTour');
+startTourBtn?.addEventListener('click', () => {
   if (tourActive) endTour();
   else startTour();
 });
-document.getElementById('tourPrev').addEventListener('click', () => goToTourStep(Math.max(tourStep - 1, 0)));
-document.getElementById('tourNext').addEventListener('click', () => goToTourStep(Math.min(tourStep + 1, tourStops.length - 1)));
-document.getElementById('tourEnd').addEventListener('click', endTour);
+
+document.getElementById('tourPrev')?.addEventListener('click', () =>
+  goToTourStep(Math.max(tourStep - 1, 0))
+);
+
+document.getElementById('tourNext')?.addEventListener('click', () =>
+  goToTourStep(Math.min(tourStep + 1, tourStops.length - 1))
+);
+
+document.getElementById('tourEnd')?.addEventListener('click', endTour);
 
 // Click outside to reset
 document.querySelector('.tree-viewport').addEventListener('click', (e) => {
