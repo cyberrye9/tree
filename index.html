@@ -248,27 +248,25 @@ overflow: visible;
 }
 /* NEW layout helpers */
 .hero-left{ min-width: 0; }
+/* Put Guided Tour at the very top-right of the hero (same height as masthead line) */
 .hero-right{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-end;
-  justify-content: flex-start;
+  position: relative;      /* anchor for absolute button */
   min-width: 240px;
 }
 
-/* keep the legend compact */
-.legend{
-  margin-top: 0;
-  padding-top: 0;
-  border-top: none;
-  max-width: 260px;
+/* Make the Guided Tour button sit at the top of the hero-right column */
+.tour-controls{
+  position: absolute;
+  top: 2px;                  /* same top line as the masthead */
+  right: 0;
+  margin-top: 0 !important;
+  z-index: 9010;
 }
-.legend-title{ margin-bottom: 8px; }
-.legend-item{ margin-bottom: 5px; }
 
-/* tour block shouldn't try to "pin" itself with margin-top:auto */
-.tour-controls{ margin-top: 0; }
+/* Push the Key/Legend down so it doesn't collide with the button */
+.legend{
+  margin-top: 54px;        /* adjust 48–64px to taste */
+}
 
 /* ============ CANVAS SECTION ============ */
 .canvas-section{
