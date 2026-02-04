@@ -180,7 +180,6 @@ header {
 /* ============ HERO (Header Section) ============ */
 /* ===== NEW HERO LAYOUT (CLEAN, NYT-STYLE) ===== */
 
-:root{ --heroH: 155px; }
 
 .hero{
   position: fixed;
@@ -1119,8 +1118,6 @@ header {
 
 /* ===== MAKE HEADER MORE COMPACT (MORE TREE ON SCREEN) ===== */
 :root{
-  --heroH: 185px; /* was 260px */
-}
 
 .hero{
   padding: 8px clamp(14px, 2.2vw, 20px) !important;
@@ -1152,7 +1149,8 @@ header {
 /* ===== HERO CLEANUP (DROP AT END OF <style>) ===== */
 
 /* make header shorter */
-:root{ --heroH: 170px; }
+
+
 
 /* tighten the whole hero block */
 .hero{
