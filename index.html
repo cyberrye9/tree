@@ -1684,13 +1684,7 @@ function resetZoom() {
   const vw = viewport.offsetWidth;
   const vh = viewport.offsetHeight;
 
-  // MATCH the actual canvas size
-  const contentMinX = 0;
-  const contentMinY = 0;
- 
   // TIGHTER BOUNDS (match where your nodes actually live)
-  // rightmost card: Rivera at left 920 + width 125 ≈ 1045
-  // bottom cards: top 620 + photo height 120 + text ≈ ~820
   const contentMinX = 0;
   const contentMinY = 0;
   const contentMaxX = 1120;
@@ -1699,9 +1693,11 @@ function resetZoom() {
   const contentWidth  = contentMaxX - contentMinX;
   const contentHeight = contentMaxY - contentMinY;
 
-  // slightly larger pad so it feels “NYT full” without clipping
   const pad = 24;
-  const scale = Math.min((vw - pad * 2) / contentWidth, (vh - pad * 2) / contentHeight);
+  const scale = Math.min(
+    (vw - pad * 2) / contentWidth,
+    (vh - pad * 2) / contentHeight
+  );
 
   const centerX = (contentMinX + contentMaxX) / 2;
   const centerY = (contentMinY + contentMaxY) / 2;
@@ -1719,6 +1715,7 @@ function resetZoom() {
   closeBtn.classList.remove('visible');
   keyboardHint.classList.remove('hidden');
 }
+
 
 // Show info panel
 function showInfo(id) {
