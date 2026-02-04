@@ -84,7 +84,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
 
 :root{
-:root{
   /* start as a sane default; JS will overwrite */
   --heroH: 140px;
 }
@@ -2089,21 +2088,36 @@ document.querySelector('.tree-viewport').addEventListener('click', (e) => {
 });
 
 // Initialize
+function syncHeroHeight(){
+  const hero = document.querySelector('.hero');
+  if(!hero) return;
+  document.documentElement.style.setProperty('--heroH', hero.offsetHeight + 'px');
+}
+
+// Initialize
 function init() {
-  // Prevent browser from remembering scroll position on refresh
-  if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual';
-  }
+  if (history.scrollRestoration) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
+  syncHeroHeight();     // ✅ add this first so canvas top is correct
   drawConnections();
   resetZoom();
   animateEntrance();
 }
 
 window.addEventListener('load', init);
+
 window.addEventListener('resize', () => {
+  syncHeroHeight();     // ✅ update hero height on resize
   drawConnections();
+
+  if (isLocked && currentPerson) {
+    zoomTo(currentPerson, true);
+  } else if (!tourActive) {
+    resetZoom();
+  }
+});
+
   // Responsive resize handler
   if (isLocked && currentPerson) {
     zoomTo(currentPerson, true);
