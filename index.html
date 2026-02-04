@@ -84,6 +84,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
 
 :root {
+  --heroH: 190px;
+
   --black: #111;
   --white: #faf9f7;
   --cream: #f4f1eb;
@@ -115,7 +117,7 @@ body{
   display: block;
 
   /* allow the page to scroll normally */
-  overflow: auto;
+overflow: hidden;
 }
 
 
@@ -175,19 +177,23 @@ header {
 
 /* ============ HERO (Header Section) ============ */
 .hero{
-  position: sticky;
+  position: fixed;          /* was sticky */
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 900;
 
-  width: 100%;
-  padding: 12px clamp(16px, 3vw, 28px);
+  height: var(--heroH);
+  padding: 10px clamp(16px, 3vw, 24px);   /* tighter */
   background: var(--cream);
   border-bottom: 2px solid var(--gray-200);
 
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: start;
-  gap: 16px;
+  gap: 14px;
+
+  overflow: hidden;         /* prevents header content from growing taller */
 }
 
 /* tighter typography in the sticky bar */
@@ -205,58 +211,24 @@ header {
 
 
 /* left column: title stack */
-.hero .hero-masthead,
-.hero .hero-kicker,
-.hero .hero-title,
-.hero .hero-subtitle,
-.hero .legend{
-  max-width: 880px;
+.hero-masthead{ margin-bottom: 6px; padding-bottom: 8px; }
+.hero-kicker{ margin-bottom: 8px; }
+
+.hero-title{
+  font-size: 1.35rem;       /* smaller */
+  line-height: 1.05;
+  margin-bottom: 8px;       /* smaller */
 }
 
-/* right column: tour controls */
-.tour-controls{
-  margin-top: 0;
-  margin-left: auto;
-  align-self: center;
-  min-width: 220px;
+.hero-subtitle{
+  font-size: 0.82rem;
+  line-height: 1.35;
+  max-width: 68ch;
+  margin: 0;                /* avoid surprise extra space */
 }
 
-
-.hero-kicker {
-  font-family: var(--sans);
-  font-size: 0.65rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--red);
-  margin-bottom: 16px;
-}
-.hero-title {
-  font-family: var(--serif);
-  font-size: 1.75rem;  /* Changed from clamp(2rem, 4vw, 2.5rem) */
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 20px;  /* Reduced from 24px */
-}
-
-.hero-subtitle {
-  font-family: var(--body);
-  font-size: 0.9rem;  /* Changed from 1rem */
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--gray-600);
-}
-.hero-meta {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid var(--gray-200);
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  color: var(--gray-400);
-  display: flex;
-  gap: 24px;
-}
+.legend{ margin-top: 0; padding-top: 0; border-top: none; max-width: 260px; }
+.tour-controls{ margin-top: 8px; }        /* tighter */
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -290,14 +262,12 @@ header {
 .canvas-section{
   position: relative;
   width: 100%;
-
-  /* make this the main event */
-  height: calc(100vh - 96px);
-  min-height: 720px;
-
+  height: calc(100vh - var(--heroH));
+  margin-top: var(--heroH);  /* pushes canvas below fixed header */
   overflow: hidden;
   background: var(--white);
 }
+
 
 
 
@@ -1134,8 +1104,6 @@ header {
       </div>
     </div>
   </div>
-</section>
-
 </section>  <!-- end of hero -->
 
 
@@ -1661,7 +1629,6 @@ function zoomTo(person, lock = false) {
   if (!photo) return;
 
   // 1. FORCE SCROLL: Auto-scroll to the map so it's visible
-document.querySelector('.canvas-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   const photoCenterX = person.offsetLeft + (photo.offsetWidth / 2);
   const photoCenterY = person.offsetTop + (photo.offsetHeight / 2);
