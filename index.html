@@ -84,7 +84,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
 
 :root{
---heroH: 260px;
+--heroH: 190px;
 
   --black: #111;
   --white: #faf9f7;
@@ -116,11 +116,10 @@ body{
   color: var(--black);
   font-family: var(--body);
   min-height: 100vh;
-  display: block;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;   /* ✅ kills page scrolling */
 }
+
 
 
 /* Grain overlay */
@@ -316,15 +315,18 @@ header {
 
 /* ============ CANVAS SECTION ============ */
 .canvas-section{
-  position: relative;
+  position: fixed;                 /* ✅ locks the tree region to viewport */
+  left: 0;
+  right: 0;
+  top: var(--heroH);
+  bottom: 0;
+
   width: 100%;
-  height: calc(100vh - var(--heroH));
-  margin-top: var(--heroH);  /* pushes canvas below fixed header */
-  overflow: hidden;
+  margin-top: 0 !important;        /* ✅ no layout push */
+  height: auto !important;         /* ✅ handled by top/bottom */
+  overflow: hidden;                /* ✅ tree itself won’t scroll */
   background: var(--white);
 }
-
-
 
 
 .tree-viewport {
@@ -1206,6 +1208,37 @@ header {
 .canvas-section{
   margin-top: var(--heroH) !important;
   height: calc(100vh - var(--heroH)) !important;
+}
+/* ===== FINAL HERO COMPACT OVERRIDE (put at very end) ===== */
+.hero{
+  padding: 10px 18px 8px !important;
+  gap: 10px !important;
+}
+
+.hero-masthead{
+  margin-bottom: 8px !important;
+}
+
+.hero-kicker{
+  padding: 5px 9px !important;
+}
+
+.hero-title{
+  margin: 6px 0 6px !important;
+  font-size: clamp(1.25rem, 1.9vw, 1.7rem) !important;
+  line-height: 1.02 !important;
+}
+
+.hero-subtitle{
+  font-size: 0.8rem !important;
+  line-height: 1.32 !important;
+}
+
+/* keep legend tight */
+.legend{
+  margin-top: 38px !important;     /* clears Guided Tour */
+  padding-top: 0 !important;
+  border-top: none !important;
 }
 
 </style>
