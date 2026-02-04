@@ -84,25 +84,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
 
 :root{
---heroH: 190px;
-
-  --black: #111;
-  --white: #faf9f7;
-  --cream: #f4f1eb;
-
-  --gray-100: #e8e5df;
-  --gray-200: #d1cdc5;
-  --gray-400: #8a8680;
-  --gray-600: #5c5955;
-
-  --red: #8b0000;
-  --gold: #9a7b4f;
-
-  --serif: 'Instrument Serif', Georgia, serif;
-  --body: 'Newsreader', Georgia, serif;
-  --sans: 'Inter', -apple-system, system-ui, sans-serif;
+:root{
+  /* start as a sane default; JS will overwrite */
+  --heroH: 140px;
 }
 
+/* HERO */
+.hero{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+
+  /* ✅ stop forcing extra empty space */
+  height: auto !important;
+
+  background: var(--cream);
+  border-bottom: 1px solid var(--gray-200);
+
+  padding: 10px 18px 8px;   /* keep your compact padding */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9000;
+}
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -2335,6 +2338,35 @@ document.addEventListener('DOMContentLoaded', () => {
   setTab('overview');
 });
 </script>
+function syncHeroHeight(){
+  const hero = document.querySelector('.hero');
+  if(!hero) return;
+  document.documentElement.style.setProperty('--heroH', hero.offsetHeight + 'px');
+}
+
+// in init()
+function init() {
+  if (history.scrollRestoration) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  syncHeroHeight();      // ✅ add this
+  drawConnections();
+  resetZoom();
+  animateEntrance();
+}
+
+// also on resize (before resetZoom is fine)
+window.addEventListener('resize', () => {
+  syncHeroHeight();      // ✅ add this
+  drawConnections();
+  if (isLocked && currentPerson) zoomTo(currentPerson, true);
+  else if (!tourActive) resetZoom();
+});
+
+// optional: after fonts load (prevents 1px jumps)
+window.addEventListener('load', () => {
+  syncHeroHeight();
+});
 
 </body>
 </html>
