@@ -179,23 +179,30 @@ header {
   top: 0;
   z-index: 900;
 
-  /* header band, not a sidebar */
   width: 100%;
-  height: auto;
-
-  overflow: visible;
-  padding: 18px clamp(18px, 4vw, 44px);
-
+  padding: 12px clamp(16px, 3vw, 28px);
   background: var(--cream);
-  border-right: none;
   border-bottom: 2px solid var(--gray-200);
 
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 16px;
 }
+
+/* tighter typography in the sticky bar */
+.hero-masthead{ margin-bottom: 10px; padding-bottom: 12px; }
+.hero-kicker{ margin-bottom: 10px; }
+.hero-title{
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  margin-bottom: 10px;
+}
+.hero-subtitle{
+  font-size: 0.85rem;
+  line-height: 1.45;
+  max-width: 72ch;
+}
+
 
 /* left column: title stack */
 .hero .hero-masthead,
@@ -214,10 +221,6 @@ header {
   min-width: 220px;
 }
 
-/* NEW: pins the tour block to the bottom of the left panel */
-.tour-controls{
-  margin-top: auto;
-}
 
 .hero-kicker {
   font-family: var(--sans);
@@ -259,16 +262,43 @@ header {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* NEW layout helpers */
+.hero-left{ min-width: 0; }
+.hero-right{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: flex-start;
+  min-width: 240px;
+}
+
+/* keep the legend compact */
+.legend{
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  max-width: 260px;
+}
+.legend-title{ margin-bottom: 8px; }
+.legend-item{ margin-bottom: 5px; }
+
+/* tour block shouldn't try to "pin" itself with margin-top:auto */
+.tour-controls{ margin-top: 0; }
 
 /* ============ CANVAS SECTION ============ */
 .canvas-section{
   position: relative;
   width: 100%;
-  height: 75vh;        /* simple + stable */
-  min-height: 620px;   /* keeps it feeling like an app */
+
+  /* make this the main event */
+  height: calc(100vh - 96px);
+  min-height: 720px;
+
   overflow: hidden;
   background: var(--white);
 }
+
 
 
 .tree-viewport {
@@ -550,17 +580,28 @@ header {
 /* ============ INFO PANEL ============ */
 .info-panel{
   position: absolute;
-  left: 28px;
-  bottom: 28px;
+  left: 18px;
+  bottom: 18px;
   z-index: 500;
+
+  width: min(420px, calc(100% - 36px));
+  background: rgba(250, 249, 247, 0.96);
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.12);
+  padding: 18px 18px 16px;
+
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-
-.info-panel.visible {
+.info-panel.visible{
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
+
 
 .info-panel::before {
   content: '';
@@ -587,7 +628,7 @@ header {
 
 .info-name {
   font-family: var(--serif);
-  font-size: 1.75rem;
+  font-size: 1.35rem;
   font-weight: 400;
   line-height: 1.15;
   margin-bottom: 6px;
@@ -1047,47 +1088,54 @@ header {
   </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-masthead">The Murder of Dan Markel</div>
-  <div class="hero-kicker">INTERACTIVE TIMELINE</div>
-  <h1 class="hero-title">The Family Tree of a Murder Conspiracy</h1>
-  <p class="hero-subtitle">How a bitter custody dispute led a prominent South Florida family to orchestrate the assassination of a law professor — and how investigators untangled the web of relationships that connected them to the killers.</p>
- <div class="legend">
-  <div class="legend-title">Key</div>
-  <div class="legend-item">
-    <div class="legend-line"></div>
-    <span class="legend-label">Family</span>
+
+  <section class="hero">
+  <div class="hero-left">
+    <div class="hero-masthead">The Murder of Dan Markel</div>
+    <div class="hero-kicker">INTERACTIVE TIMELINE</div>
+    <h1 class="hero-title">The Family Tree of a Murder Conspiracy</h1>
+    <p class="hero-subtitle">How a bitter custody dispute led a prominent South Florida family to orchestrate the assassination of a law professor — and how investigators untangled the web of relationships that connected them to the killers.</p>
   </div>
-  <div class="legend-item">
-    <div class="legend-line" style="border-top: 2px dashed var(--gray-400); background: none;"></div>
-    <span class="legend-label">Marriage</span>
-  </div>
-  <div class="legend-item">
-    <div class="legend-line" style="background: var(--red);"></div>
-    <span class="legend-label">Conspiracy</span>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background: var(--gold);"></div>
-    <span class="legend-label">Victim</span>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="background: var(--red);"></div>
-    <span class="legend-label">Convicted</span>
-  </div>
-</div>
-  
-  <div class="tour-controls">
-    <button class="tour-btn" id="startTour">▶ Guided Tour</button>
-    <div class="tour-progress" id="tourProgress">
-      <span class="tour-step" id="tourStep">1 / 5</span>
-      <div class="tour-nav">
-        <button id="tourPrev">←</button>
-        <button id="tourNext">→</button>
+
+  <div class="hero-right">
+    <div class="legend">
+      <div class="legend-title">Key</div>
+      <div class="legend-item">
+        <div class="legend-line"></div>
+        <span class="legend-label">Family</span>
       </div>
-      <button id="tourEnd" style="margin-left: 8px; font-size: 0.6rem;">✕</button>
+      <div class="legend-item">
+        <div class="legend-line" style="border-top: 2px dashed var(--gray-400); background: none;"></div>
+        <span class="legend-label">Marriage</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="background: var(--red);"></div>
+        <span class="legend-label">Conspiracy</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--gold);"></div>
+        <span class="legend-label">Victim</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: var(--red);"></div>
+        <span class="legend-label">Convicted</span>
+      </div>
+    </div>
+
+    <div class="tour-controls">
+      <button class="tour-btn" id="startTour">▶ Guided Tour</button>
+      <div class="tour-progress" id="tourProgress">
+        <span class="tour-step" id="tourStep">1 / 5</span>
+        <div class="tour-nav">
+          <button id="tourPrev">←</button>
+          <button id="tourNext">→</button>
+        </div>
+        <button id="tourEnd" style="margin-left: 8px; font-size: 0.6rem;">✕</button>
+      </div>
     </div>
   </div>
-  
+</section>
+
 </section>  <!-- end of hero -->
 
 
