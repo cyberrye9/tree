@@ -786,6 +786,7 @@ header {
 }
 
 /* ============ KEYBOARD HINT ============ */
+/* ============ KEYBOARD HINT ============ */
 .keyboard-hint {
   position: fixed;
   bottom: 40px;
@@ -794,12 +795,16 @@ header {
   display: flex;
   gap: 16px;
   font-family: var(--sans);
-  font-size: 0.55rem;
-  color: var(--gray-400);
-  z-index: 100;
+  font-size: 0.65rem;  /* Increased from 0.55rem */
+  color: var(--gray-600);  /* Darker from var(--gray-400) */
+  z-index: 1001;  /* Higher z-index to ensure it's on top */
   opacity: 0;
   animation: fadeIn 0.5s ease 2s forwards;
   transition: opacity 0.3s;
+  background: rgba(255, 255, 255, 0.95);  /* Add background */
+  padding: 8px 16px;  /* Add padding */
+  border-radius: 4px;  /* Round corners */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);  /* Subtle shadow */
 }
 
 .keyboard-hint.hidden {
