@@ -644,10 +644,7 @@ header {
 
 /* ============ TOUR CONTROLS ============ */
 .tour-controls {
-  position: fixed;
-  bottom: 30px;
-  left: 30px; 
-  right: auto;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1020,9 +1017,9 @@ header {
     <span class="legend-label">Convicted</span>
   </div>
 </div>
-</section>
-
-<section class="canvas-section">
+  </div>
+  </div>  <!-- end of legend -->
+  
   <div class="tour-controls">
     <button class="tour-btn" id="startTour">▶ Guided Tour</button>
     <div class="tour-progress" id="tourProgress">
@@ -1034,6 +1031,12 @@ header {
       <button id="tourEnd" style="margin-left: 8px; font-size: 0.6rem;">✕</button>
     </div>
   </div>
+  
+</section>  <!-- end of hero -->
+</section>
+
+<section class="canvas-section">
+  
 <div class="interaction-hint">
   <span class="hint-icon"></span>
   <span>Hover to Reveal Profile</span>
