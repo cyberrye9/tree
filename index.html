@@ -180,25 +180,74 @@ header {
 .header-nav a:hover { opacity: 1; }
 
 /* ============ HERO (Header Section) ============ */
+/* ===== NEW HERO LAYOUT (CLEAN, NYT-STYLE) ===== */
+
+:root{ --heroH: 155px; }
+
 .hero{
-  position: fixed;          /* was sticky */
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9000;
-
+  position: fixed;
+  top: 0; left: 0; right: 0;
   height: var(--heroH);
-  padding: 10px clamp(16px, 3vw, 24px);   /* tighter */
   background: var(--cream);
-  border-bottom: 2px solid var(--gray-200);
-
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  gap: 14px;
-
-overflow: visible;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 14px 28px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 9000;
 }
+
+/* TOP ROW */
+.hero-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* BOTTOM ROW */
+.hero-bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+/* kill old grid behavior */
+.hero-left,
+.hero-right{
+  all: unset;
+}
+
+/* tighten typography */
+.hero-title{
+  font-size: 1.9rem;
+  margin: 4px 0 4px;
+  line-height: 1.05;
+}
+
+.hero-subtitle{
+  font-size: 0.82rem;
+  max-width: 60ch;
+}
+
+.legend{
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Guided tour lives in the top row now */
+#startTour{
+  position: static !important;
+  margin: 0 !important;
+}
+
+/* canvas adjusts */
+.canvas-section{
+  margin-top: var(--heroH) !important;
+  height: calc(100vh - var(--heroH)) !important;
+}
+
 .hero-kicker{
   display: inline-block;
   font-family: var(--sans);
@@ -1179,55 +1228,30 @@ overflow: visible;
 </header>
 
 
-  <section class="hero">
-  <div class="hero-left">
-    <div class="hero-masthead">The Murder of Dan Markel</div>
-   <div class="hero-kicker">Interactive timeline</div>
-<h1 class="hero-title">The <span class="em">Family Tree</span> of a Murder Conspiracy</h1>
-<p class="hero-subtitle">
-  A custody battle, a South Florida family, and a hired crew — mapped as investigators traced
-  the relationships that tied them together.
-</p>
+<section class="hero">
 
+  <div class="hero-top">
+    <div class="hero-masthead">The Murder of Dan Markel</div>
+    <button class="tour-btn" id="startTour">▶ Guided Tour</button>
   </div>
 
-  <div class="hero-right">
+  <div class="hero-bottom">
+    <div>
+      <div class="hero-kicker">Interactive Timeline</div>
+      <h1 class="hero-title">The <span class="em">Family Tree</span> of a Murder Conspiracy</h1>
+      <p class="hero-subtitle">
+        A custody battle, a South Florida family, and a hired crew — mapped as investigators traced the relationships that tied them together.
+      </p>
+    </div>
+
     <div class="legend">
       <div class="legend-title">Key</div>
-      <div class="legend-item">
-        <div class="legend-line"></div>
-        <span class="legend-label">Family</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-line" style="border-top: 2px dashed var(--gray-400); background: none;"></div>
-        <span class="legend-label">Marriage</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-line" style="background: var(--red);"></div>
-        <span class="legend-label">Conspiracy</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background: var(--gold);"></div>
-        <span class="legend-label">Victim</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background: var(--red);"></div>
-        <span class="legend-label">Convicted</span>
-      </div>
-    </div>
-
-    <div class="tour-controls">
-      <button class="tour-btn" id="startTour">▶ Guided Tour</button>
-      <div class="tour-progress" id="tourProgress">
-        <span class="tour-step" id="tourStep">1 / 5</span>
-        <div class="tour-nav">
-          <button id="tourPrev">←</button>
-          <button id="tourNext">→</button>
-        </div>
-        <button id="tourEnd" style="margin-left: 8px; font-size: 0.6rem;">✕</button>
-      </div>
+      <!-- keep your legend items -->
     </div>
   </div>
+
+</section>
+
 </section>  <!-- end of hero -->
 
 
