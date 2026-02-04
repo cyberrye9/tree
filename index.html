@@ -116,12 +116,10 @@ body{
   color: var(--black);
   font-family: var(--body);
   min-height: 100vh;
-
-  /* no split-screen */
   display: block;
 
-  /* allow the page to scroll normally */
-overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 
@@ -1235,6 +1233,13 @@ header {
     <button class="tour-btn" id="startTour">▶ Guided Tour</button>
   </div>
 
+<section class="hero">
+
+  <div class="hero-top">
+    <div class="hero-masthead">The Murder of Dan Markel</div>
+    <button class="tour-btn" id="startTour">▶ Guided Tour</button>
+  </div>
+
   <div class="hero-bottom">
     <div>
       <div class="hero-kicker">Interactive Timeline</div>
@@ -1244,40 +1249,40 @@ header {
       </p>
     </div>
 
-   <div class="legend">
-  <div class="legend-title">Key</div>
+    <div class="legend">
+      <div class="legend-title">Key</div>
 
-  <div class="legend-item">
-    <span class="legend-line" style="background: var(--gray-200);"></span>
-    <span class="legend-label">Family</span>
-  </div>
+      <div class="legend-item">
+        <span class="legend-line" style="background: var(--gray-200);"></span>
+        <span class="legend-label">Family</span>
+      </div>
 
-  <div class="legend-item">
-    <span class="legend-line" style="background: repeating-linear-gradient(to right, var(--gray-400) 0 6px, transparent 6px 11px); height:2px;"></span>
-    <span class="legend-label">Marriage</span>
-  </div>
+      <div class="legend-item">
+        <span class="legend-line" style="background: repeating-linear-gradient(to right, var(--gray-400) 0 6px, transparent 6px 11px); height:2px;"></span>
+        <span class="legend-label">Marriage</span>
+      </div>
 
-  <div class="legend-item">
-    <span class="legend-line" style="background: var(--red); opacity:.6; height:2px;"></span>
-    <span class="legend-label">Conspiracy</span>
-  </div>
+      <div class="legend-item">
+        <span class="legend-line" style="background: var(--red); opacity:.6; height:2px;"></span>
+        <span class="legend-label">Conspiracy</span>
+      </div>
 
-  <div class="legend-item">
-    <span class="legend-dot" style="background: var(--gold);"></span>
-    <span class="legend-label">Victim</span>
-  </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: var(--gold);"></span>
+        <span class="legend-label">Victim</span>
+      </div>
 
-  <div class="legend-item">
-    <span class="legend-dot" style="background: var(--red);"></span>
-    <span class="legend-label">Convicted</span>
-  </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: var(--red);"></span>
+        <span class="legend-label">Convicted</span>
+      </div>
 
-  <div class="legend-item">
-    <span class="legend-dot" style="background: transparent; border: 1px solid var(--gray-400);"></span>
-    <span class="legend-label">Unindicted</span>
-  </div>
-</div>
-
+      <div class="legend-item">
+        <span class="legend-dot" style="background: transparent; border: 1px solid var(--gray-400);"></span>
+        <span class="legend-label">Unindicted</span>
+      </div>
+    </div>
+  </div> <!-- ✅ CLOSE hero-bottom -->
 
 </section>  <!-- end of hero -->
 
