@@ -2351,35 +2351,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setTab('overview');
 });
 </script>
-function syncHeroHeight(){
-  const hero = document.querySelector('.hero');
-  if(!hero) return;
-  document.documentElement.style.setProperty('--heroH', hero.offsetHeight + 'px');
-}
 
-// in init()
-function init() {
-  if (history.scrollRestoration) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-
-  syncHeroHeight();      // ✅ add this
-  drawConnections();
-  resetZoom();
-  animateEntrance();
-}
-
-// also on resize (before resetZoom is fine)
-window.addEventListener('resize', () => {
-  syncHeroHeight();      // ✅ add this
-  drawConnections();
-  if (isLocked && currentPerson) zoomTo(currentPerson, true);
-  else if (!tourActive) resetZoom();
-});
-
-// optional: after fonts load (prevents 1px jumps)
-window.addEventListener('load', () => {
-  syncHeroHeight();
-});
 
 </body>
 </html>
