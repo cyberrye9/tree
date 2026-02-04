@@ -1663,29 +1663,27 @@ function resetZoom() {
   const vw = viewport.offsetWidth;
   const vh = viewport.offsetHeight;
 
-  // Bounds for much taller, more vertical tree layout
+  // MATCH the actual canvas size
   const contentMinX = 0;
-  const contentMaxX = 1100;
-  const contentMinY = 0; 
-  const contentMaxY = 1150; // Bottom children at 1000 + 150 for labels
-  
+  const contentMinY = 0;
+  const contentMaxX = 1500;
+  const contentMaxY = 950;
+
   const contentWidth = contentMaxX - contentMinX;
   const contentHeight = contentMaxY - contentMinY;
-  
-  const scaleX = vw / contentWidth;
-  const scaleY = vh / contentHeight;
-  
-  // 1.02x for safe, conservative scaling that keeps all content visible
-  const scale = Math.min(scaleX, scaleY) * 1.02;
-  
-  const treeCenterPointX = (contentMinX + contentMaxX) / 2;
-  const treeCenterPointY = (contentMinY + contentMaxY) / 2;
-  
-  const offsetX = (vw / 2) - (treeCenterPointX * scale);
-  const offsetY = (vh / 2) - (treeCenterPointY * scale);
-  
+
+  // Fit with a small “editorial” padding so it feels full but not clipped
+  const pad = 32;
+  const scale = Math.min((vw - pad * 2) / contentWidth, (vh - pad * 2) / contentHeight);
+
+  const centerX = (contentMinX + contentMaxX) / 2;
+  const centerY = (contentMinY + contentMaxY) / 2;
+
+  const offsetX = (vw / 2) - (centerX * scale);
+  const offsetY = (vh / 2) - (centerY * scale);
+
   tree.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
-  
+
   tree.classList.remove('focused', 'locked');
   people.forEach(p => p.classList.remove('active'));
   isLocked = false;
@@ -1694,6 +1692,7 @@ function resetZoom() {
   closeBtn.classList.remove('visible');
   keyboardHint.classList.remove('hidden');
 }
+
 
 // Show info panel
 function showInfo(id) {
