@@ -1244,11 +1244,39 @@ header {
       </p>
     </div>
 
-    <div class="legend">
-      <div class="legend-title">Key</div>
-      <!-- keep your legend items -->
-    </div>
+   <div class="legend">
+  <div class="legend-title">Key</div>
+
+  <div class="legend-item">
+    <span class="legend-line" style="background: var(--gray-200);"></span>
+    <span class="legend-label">Family</span>
   </div>
+
+  <div class="legend-item">
+    <span class="legend-line" style="background: repeating-linear-gradient(to right, var(--gray-400) 0 6px, transparent 6px 11px); height:2px;"></span>
+    <span class="legend-label">Marriage</span>
+  </div>
+
+  <div class="legend-item">
+    <span class="legend-line" style="background: var(--red); opacity:.6; height:2px;"></span>
+    <span class="legend-label">Conspiracy</span>
+  </div>
+
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--gold);"></span>
+    <span class="legend-label">Victim</span>
+  </div>
+
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--red);"></span>
+    <span class="legend-label">Convicted</span>
+  </div>
+
+  <div class="legend-item">
+    <span class="legend-dot" style="background: transparent; border: 1px solid var(--gray-400);"></span>
+    <span class="legend-label">Unindicted</span>
+  </div>
+</div>
 
 
 </section>  <!-- end of hero -->
@@ -1379,10 +1407,20 @@ header {
         </div>
       </div>
       
-   
+   <div class="person" data-id="shelly" data-index="8" style="left: 505px; top: 620px;">
+  <div class="person-photo">
+    <img src="shelly.jpg" onerror="this.style.opacity='0'">
+    <div class="person-indicator"></div>
+  </div>
+  <div class="person-info">
+    <div class="person-name">Shelly Markel</div>
+    <div class="person-role">Sister</div>
+  </div>
+</div>
+
       
       
-      <div class="person convicted" data-id="magbanua" data-index="11" style="left: 630px; top: 510px;">
+      <div class="person convicted" data-id="magbanua" data-index="9" style="left: 630px; top: 510px;">
         <div class="person-photo">
           <img src="magbanua.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
@@ -1394,7 +1432,7 @@ header {
         </div>
       </div>
       
-      <div class="person convicted" data-id="garcia" data-index="12" style="left: 770px; top: 200px;">
+    <div class="person convicted" data-id="garcia" data-index="10" style="left: 770px; top: 200px;">
         <div class="person-photo">
           <img src="garcia.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
@@ -1406,7 +1444,7 @@ header {
         </div>
       </div>
       
-      <div class="person" data-id="rivera" data-index="13" style="left: 920px; top: 510px;">
+      <div class="person" data-id="rivera" data-index="11" style="left: 920px; top: 510px;">
         <div class="person-photo">
           <img src="rivera.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
@@ -1650,7 +1688,7 @@ let isLocked = false;
 let currentPerson = null;
 let currentIndex = -1;
 const people = Array.from(document.querySelectorAll('.person'));
-const peopleIds = ['harvey','donna','charlie','wendi','rob','phil','ruth','dan','shelly','lincoln','benjamin','magbanua','garcia','rivera'];
+const peopleIds = ['harvey','donna','charlie','wendi','rob','phil','ruth','dan','shelly','magbanua','garcia','rivera'];
 
 // Tour state
 let tourActive = false;
