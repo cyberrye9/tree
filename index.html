@@ -1102,6 +1102,66 @@ overflow: visible;
   height: calc(100vh - var(--heroH)) !important;
   margin-top: var(--heroH) !important;
 }
+/* ===== HERO CLEANUP (DROP AT END OF <style>) ===== */
+
+/* make header shorter */
+:root{ --heroH: 170px; }
+
+/* tighten the whole hero block */
+.hero{
+  padding: 10px clamp(14px, 2vw, 20px) !important;
+  gap: 12px !important;
+  align-items: start !important;
+  border-bottom: 1px solid var(--gray-200) !important; /* keep ONE clean divider */
+}
+
+/* kill any extra dividers causing “broken lines” */
+.hero-masthead{
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 10px !important;
+}
+
+/* guided tour aligned to masthead row */
+.hero-right{
+  position: relative !important;
+  min-width: 320px !important;
+  padding-top: 0 !important;
+  align-items: flex-start !important;
+}
+
+#startTour{
+  position: absolute !important;
+  top: 0 !important;     /* same height row as masthead */
+  right: 0 !important;
+  margin: 0 !important;
+}
+
+/* KEY block sits under the button, no weird top line */
+.legend{
+  margin-top: 44px !important;  /* clears the button */
+  padding-top: 0 !important;
+  border-top: none !important;  /* removes the “broken line” */
+  max-width: 260px !important;
+}
+
+/* slightly tighten typography so the tree gets more page */
+.hero-title{
+  margin: 6px 0 6px !important;
+  font-size: clamp(1.35rem, 2.05vw, 1.85rem) !important;
+  line-height: 1.02 !important;
+}
+
+.hero-subtitle{
+  font-size: 0.82rem !important;
+  line-height: 1.35 !important;
+}
+
+/* ensure canvas uses the new hero height */
+.canvas-section{
+  margin-top: var(--heroH) !important;
+  height: calc(100vh - var(--heroH)) !important;
+}
 
 </style>
 
