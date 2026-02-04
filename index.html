@@ -1068,29 +1068,30 @@ header {
       <span class="legend-label">Convicted</span>
     </div>
   </div>
+/* Usage instructions */
+.usage-instructions {
+  margin-top: 18px;        /* was 40px */
+  padding-top: 14px;       /* was 30px */
+  border-top: 1px solid var(--gray-200);
+}
 
-  <div class="usage-instructions">
-    <div class="usage-title">How to Navigate</div>
-    <div class="usage-item">
-      <strong>Hover</strong> over a person to highlight them
-    </div>
-    <div class="usage-item">
-      <strong>Click</strong> on a person to view their profile
-    </div>
-    <div class="usage-item">
-      <kbd>←</kbd> <kbd>→</kbd> Navigate between people
-    </div>
-    <div class="usage-item">
-      <kbd>L</kbd> Lock/unlock focus on a person
-    </div>
-    <div class="usage-item">
-      <kbd>Esc</kbd> Reset the view
-    </div>
-    <div class="usage-item">
-      <strong>Drag</strong> the canvas to pan around
-    </div>
-  </div>
-</section>
+.usage-title {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--black);
+  margin-bottom: 10px;     /* was 18px */
+}
+
+.usage-item {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  margin-bottom: 8px;      /* was 12px */
+  line-height: 1.45;       /* was 1.6 */
+}
 
 <section class="canvas-section">
   <div class="tour-controls">
