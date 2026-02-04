@@ -169,16 +169,25 @@ header {
 .header-nav a:hover { opacity: 1; }
 
 /* ============ HERO (Header Section) ============ */
-.hero {
+.hero{
   position: relative;
-  width: 280px;  /* Changed from 320px */
+  width: 280px;
   flex-shrink: 0;
   height: 100vh;
   overflow-y: auto;
-  padding: 25px 20px;  /* Further reduced padding */
+  padding: 25px 20px;
   background: var(--cream);
   border-right: 2px solid var(--gray-200);
+
+  /* NEW */
+  display: flex;
+  flex-direction: column;
 }
+/* NEW: pins the tour block to the bottom of the left panel */
+.tour-controls{
+  margin-top: auto;
+}
+
 .hero-kicker {
   font-family: var(--sans);
   font-size: 0.65rem;
