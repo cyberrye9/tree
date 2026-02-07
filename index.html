@@ -6,33 +6,10 @@
 <title>The Markel Conspiracy · An Anatomy of a Murder-for-Hire</title>
 <style>
 /* === UI HINTS (Centered & Styled) === */
-/* === UI HINTS (Centered & Styled) === */
 .interaction-hint {
-  position: fixed;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--gray-600);
-  background: rgba(255, 255, 255, 0.95);
-  padding: 10px 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  z-index: 10001;  /* Changed from 1001 to be above grain */
-  opacity: 0;
-  animation: fadeIn 0.5s ease 1s forwards;
+  display: none;
 }
-.interaction-hint.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
+
 .hint-icon {
   font-size: 0.9rem;
   opacity: 0.6;
@@ -83,13 +60,20 @@
 }
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap');
 
-:root{
-  /* start as a sane default; JS will overwrite */
-  --heroH: 140px;
+:root {
+  --black: #111;
+  --white: #faf9f7;
+  --cream: #f4f1eb;
+  --gray-100: #e8e5df;
+  --gray-200: #d1cdc5;
+  --gray-400: #8a8680;
+  --gray-600: #5c5955;
+  --red: #8b0000;
+  --gold: #9a7b4f;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --body: 'Newsreader', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
 }
-
-/* HERO */
-
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -98,29 +82,29 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-body{
+body {
   background: var(--cream);
   color: var(--black);
   font-family: var(--body);
-  min-height: 100vh;
-
-  overflow: hidden;   /* ✅ kills page scrolling */
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
-
-
 
 /* Grain overlay */
 .grain {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 50;
+  z-index: 10000;
   opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 /* ============ HEADER ============ */
-
+header {
+  display: none;
+}
 
 /* Left panel masthead */
 .hero-masthead {
@@ -135,6 +119,41 @@ body{
   border-bottom: 1px solid var(--gray-200);
 }
 
+/* Usage instructions */
+.usage-instructions {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid var(--gray-200);
+}
+
+.usage-title {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--black);
+  margin-bottom: 18px;
+}
+
+.usage-item {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.usage-item kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 3px;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  margin: 0 2px;
+}
 
 .masthead {
   font-family: var(--sans);
@@ -159,137 +178,72 @@ body{
   opacity: 0.5;
   transition: opacity 0.2s;
 }
+
 .header-nav a:hover { opacity: 1; }
 
 /* ============ HERO (Header Section) ============ */
-/.hero{
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 9000;
-
+.hero {
+  position: relative;
+  width: 420px;
+  flex-shrink: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 40px 40px 40px 40px;
   background: var(--cream);
-  border-bottom: 1px solid var(--gray-200);
-
-  display: flex;
-  flex-direction: column;
-
-  padding: 10px 18px 8px;
-  gap: 10px;
+  border-right: 2px solid var(--gray-200);
 }
 
-
-/* TOP ROW */
-.hero-top{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* BOTTOM ROW */
-.hero-bottom{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 40px;
-}
-
-
-/* Guided tour lives in the top row now */
-#startTour{
-  position: static !important;
-  margin: 0 !important;
-}
-
-/* canvas adjusts */
-.canvas-section{
-  margin-top: var(--heroH) !important;
-  height: calc(100vh - var(--heroH)) !important;
-}
-
-.hero-kicker{
-  display: inline-block;
+.hero-kicker {
   font-family: var(--sans);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: 0.65rem;
+  font-weight: 500;
   text-transform: uppercase;
-  color: var(--black);
-  opacity: 0.85;
-  padding: 6px 10px;
-  border: 1px solid var(--gray-200);
-  background: rgba(255,255,255,0.55);
-  border-radius: 4px;
-  width: fit-content;
+  letter-spacing: 0.15em;
+  color: var(--red);
+  margin-bottom: 16px;
 }
 
-.hero-title{
+.hero-title {
   font-family: var(--serif);
-  font-size: clamp(1.55rem, 2.3vw, 2.05rem);
-  line-height: 1.02;
-  margin: 8px 0 10px;
-  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
 }
 
-.hero-title .em{
-  font-style: italic;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
-}
-
-.hero-subtitle{
+.hero-subtitle {
   font-family: var(--body);
-  font-size: 0.88rem;
-  line-height: 1.45;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
   color: var(--gray-600);
-  max-width: 62ch;
 }
 
-
-.legend{ margin-top: 0; padding-top: 0; border-top: none; max-width: 260px; }
-.tour-controls{ margin-top: 8px; }        /* tighter */
+.hero-meta {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-200);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  display: flex;
+  gap: 24px;
+}
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-/* NEW layout helpers */
-.hero-left{ min-width: 0; }
-/* Put Guided Tour at the very top-right of the hero (same height as masthead line) */
-.hero-right{
-  position: relative;      /* anchor for absolute button */
-  min-width: 240px;
-}
-
-/* Make the Guided Tour button sit at the top of the hero-right column */
-.tour-controls{
-  position: absolute;
-  top: 2px;                  /* same top line as the masthead */
-  right: 0;
-  margin-top: 0 !important;
-  z-index: 9010;
-}
-
-/* Push the Key/Legend down so it doesn't collide with the button */
-.legend{
-  margin-top: 54px;        /* adjust 48–64px to taste */
-}
 
 /* ============ CANVAS SECTION ============ */
-.canvas-section{
-  position: fixed;                 /* ✅ locks the tree region to viewport */
-  left: 0;
-  right: 0;
-  top: var(--heroH);
-  bottom: 0;
-
-  width: 100%;
-  margin-top: 0 !important;        /* ✅ no layout push */
-  height: auto !important;         /* ✅ handled by top/bottom */
-  overflow: hidden;                /* ✅ tree itself won’t scroll */
+.canvas-section {
+  position: relative;
+  flex: 1;
+  height: 100vh;
+  overflow: hidden;
   background: var(--white);
 }
-
 
 .tree-viewport {
   position: absolute;
@@ -426,11 +380,6 @@ body{
   max-width: 240px;
   line-height: 1.5;
 }
-/* keep labels hidden */
-.line-label { display: none !important; }
-
-/* make sure conspiracy lines show */
-.connections .conspiracy { display: inline !important; }
 
 /* ============ PERSON CARD ============ */
 .person {
@@ -573,30 +522,28 @@ body{
 }
 
 /* ============ INFO PANEL ============ */
-.info-panel{
-  position: absolute;
-  left: 18px;
-  bottom: 18px;
-  z-index: 500;
-
-  width: min(420px, calc(100% - 36px));
-  background: rgba(250, 249, 247, 0.96);
+.info-panel {
+  position: fixed;
+  left: clamp(20px, 4vw, 60px);
+  bottom: 40px;
+  width: 400px;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  background: var(--white);
   border: 1px solid var(--gray-200);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.12);
-  padding: 18px 18px 16px;
-
+  padding: 28px 32px;
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 500;
 }
 
-.info-panel.visible{
+.info-panel.visible {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
-
 
 .info-panel::before {
   content: '';
@@ -623,7 +570,7 @@ body{
 
 .info-name {
   font-family: var(--serif);
-  font-size: 1.35rem;
+  font-size: 1.75rem;
   font-weight: 400;
   line-height: 1.15;
   margin-bottom: 6px;
@@ -733,7 +680,10 @@ body{
 
 /* ============ TOUR CONTROLS ============ */
 .tour-controls {
-  margin-top: 24px;
+  position: fixed;
+  bottom: 30px;
+  left: 30px; 
+  right: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -832,49 +782,60 @@ body{
 
 /* ============ LEGEND ============ */
 .legend {
-  margin-top: 24px;        /* was 40px */
-  padding-top: 18px;       /* was 30px */
+  margin-top: 40px;
+  padding-top: 30px;
   border-top: 1px solid var(--gray-200);
 }
-
 .legend-title {
   font-family: var(--sans);
-  font-size: 0.7rem;       /* was 0.75rem */
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.22em;
   color: var(--black);
-  margin-bottom: 10px;     /* was 18px */
+  margin-bottom: 18px;
 }
+
 
 .legend-item {
   display: flex;
   align-items: center;
-  margin-bottom: 6px;      /* was 8px */
+  margin-bottom: 8px;
 }
 
 .legend-line {
-  width: 32px;             /* was 40px */
+  width: 40px;
   height: 2px;
-  margin-right: 8px;       /* was 10px */
+  margin-right: 10px;
   background: var(--gray-200);
 }
 
-.legend-dot {
-  width: 10px;             /* was 12px */
-  height: 10px;            /* was 12px */
-  border-radius: 50%;
-  margin-right: 8px;       /* was 10px */
+.legend-line.dashed {
+  background: repeating-linear-gradient(90deg, var(--gray-400), var(--gray-400) 4px, transparent 4px, transparent 8px);
 }
+
+.legend-line.red {
+  background: var(--red);
+  opacity: 0.5;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.legend-dot.gold { background: var(--gold); }
+.legend-dot.red { background: var(--red); }
 
 .legend-label {
   font-family: var(--sans);
-  font-size: 0.62rem;      /* was 0.65rem */
+  font-size: 0.65rem;
   color: var(--black);
   font-weight: 500;
 }
 
-/* ============ KEYBOARD HINT ============ */
 /* ============ KEYBOARD HINT ============ */
 .keyboard-hint {
   position: fixed;
@@ -884,16 +845,12 @@ body{
   display: flex;
   gap: 16px;
   font-family: var(--sans);
-  font-size: 0.65rem;  /* Increased from 0.55rem */
-  color: var(--gray-600);  /* Darker from var(--gray-400) */
-  z-index: 1001;  /* Higher z-index to ensure it's on top */
+  font-size: 0.55rem;
+  color: var(--gray-400);
+  z-index: 100;
   opacity: 0;
   animation: fadeIn 0.5s ease 2s forwards;
   transition: opacity 0.3s;
-  background: rgba(255, 255, 255, 0.95);  /* Add background */
-  padding: 8px 16px;  /* Add padding */
-  border-radius: 4px;  /* Round corners */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);  /* Subtle shadow */
 }
 
 .keyboard-hint.hidden {
@@ -1065,127 +1022,9 @@ body{
     width: auto;
     max-height: 50vh;
   }
-
+  
   .minimap, .keyboard-hint { display: none; }
 }
-
-/* ===== FIX THE "BROKEN LINE" BEHIND HOVER HINT ===== */
-.hero-masthead{
-  border-bottom: none !important;
-  padding-bottom: 0 !important;
-  margin-bottom: 12px !important;
-}
-
-/* (optional) if you still want a divider, make it a full-width clean rule instead */
-.hero{
-  /* keep your existing border-bottom if you like */
-  /* border-bottom: 2px solid var(--gray-200); */
-}
-
-/* ===== MAKE HEADER MORE COMPACT (MORE TREE ON SCREEN) ===== */
-
-
-/* ===== FINAL HERO COMPACT OVERRIDE (put at very end) ===== */
-.hero{
-  padding: 10px 18px 8px !important;
-  gap: 10px !important;
-}
-
-.hero-masthead{
-  margin-bottom: 8px !important;
-}
-
-.hero-kicker{
-  padding: 5px 9px !important;
-}
-
-.hero-title{
-  margin: 6px 0 6px !important;
-  font-size: clamp(1.25rem, 1.9vw, 1.7rem) !important;
-  line-height: 1.02 !important;
-}
-
-.hero-subtitle{
-  font-size: 0.8rem !important;
-  line-height: 1.32 !important;
-}
-
-/* keep legend tight */
-.legend{
-  margin-top: 38px !important;     /* clears Guided Tour */
-  padding-top: 0 !important;
-  border-top: none !important;
-}
-.pullquote-section,
-.sources-section{
-  display: none !important;
-}
-/* ===== FINAL HERO + CANVAS AUTHORITY (put at very end) ===== */
-
-/* hero */
-.hero{
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 9000;
-
-  background: var(--cream);
-  border-bottom: 1px solid var(--gray-200);
-
-  display: flex;
-  flex-direction: column;
-  padding: 10px 18px 8px;
-  gap: 10px;
-}
-
-.hero-top{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#startTour{
-  position: static !important;
-  margin: 0 !important;
-}
-
-/* tighten type */
-.hero-masthead{ margin-bottom: 8px !important; padding-bottom: 0 !important; border-bottom: none !important; }
-
-.hero-kicker{ padding: 5px 9px !important; }
-
-.hero-title{
-  margin: 6px 0 6px !important;
-  font-size: clamp(1.25rem, 1.9vw, 1.7rem) !important;
-  line-height: 1.02 !important;
-}
-
-.hero-subtitle{
-  font-size: 0.8rem !important;
-  line-height: 1.32 !important;
-}
-
-/* legend sits in hero-bottom, no fake offsets needed */
-.legend{
-  margin: 0 !important;
-  padding-top: 0 !important;
-  border-top: none !important;
-  max-width: 260px;
-}
-
-/* canvas: ONE sizing system (top/bottom), no margin-top hacks */
-.canvas-section{
-  position: fixed;
-  left: 0; right: 0;
-  top: var(--heroH);
-  bottom: 0;
-
-  margin-top: 0 !important;
-  height: auto !important;
-
-  overflow: hidden;
-  background: var(--white);
-}
-
 </style>
 
 </head>
@@ -1194,62 +1033,82 @@ body{
 <div class="grain"></div>
 
 <header>
-<section class="hero">
-  <div class="hero-top">
-    <div class="hero-masthead">The Murder of Dan Markel</div>
-    <button class="tour-btn" id="startTour">▶ Guided Tour</button>
-  </div>
-
-
-  <div class="hero-bottom">
-    <div>
-      <div class="hero-kicker">Interactive Timeline</div>
-      <h1 class="hero-title">The <span class="em">Family Tree</span> of a Murder Conspiracy</h1>
-      <p class="hero-subtitle">
-        A custody battle, a South Florida family, and a hired crew — mapped as investigators traced the relationships that tied them together.
-      </p>
-    </div>
-
-    <div class="legend">
-      <div class="legend-title">Key</div>
-
-      <div class="legend-item">
-        <span class="legend-line" style="background: var(--gray-200);"></span>
-        <span class="legend-label">Family</span>
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-line" style="background: repeating-linear-gradient(to right, var(--gray-400) 0 6px, transparent 6px 11px); height:2px;"></span>
-        <span class="legend-label">Marriage</span>
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-line" style="background: var(--red); opacity:.6; height:2px;"></span>
-        <span class="legend-label">Conspiracy</span>
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-dot" style="background: var(--gold);"></span>
-        <span class="legend-label">Victim</span>
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-dot" style="background: var(--red);"></span>
-        <span class="legend-label">Convicted</span>
-      </div>
-
-      <div class="legend-item">
-        <span class="legend-dot" style="background: transparent; border: 1px solid var(--gray-400);"></span>
-        <span class="legend-label">Unindicted</span>
-      </div>
-    </div>
-  </div> <!-- ✅ CLOSE hero-bottom -->
-
-</section>  <!-- end of hero -->
+  <div class="masthead">The Murder of Dan Markel</div>
+  <nav class="header-nav">
+    <a href="index2.html">Profiles</a>
+    <a href="tl2.html">Timeline</a>
+  </nav>
 </header>
 
+<section class="hero">
+  <div class="hero-masthead">The Murder of Dan Markel</div>
+  <div class="hero-kicker">INTERACTIVE TIMELINE</div>
+  <h1 class="hero-title">The Family Tree of a Murder Conspiracy</h1>
+  <p class="hero-subtitle">How a bitter custody dispute led a prominent South Florida family to orchestrate the assassination of a law professor — and how investigators untangled the web of relationships that connected them to the killers.</p>
+  <div class="hero-meta">
+    <span>Tallahassee, Florida</span>
+    <span>July 18, 2014 – Present</span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-title">Key</div>
+    <div class="legend-item">
+      <div class="legend-line"></div>
+      <span class="legend-label">Family</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line dashed"></div>
+      <span class="legend-label">Marriage</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line red"></div>
+      <span class="legend-label">Conspiracy</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot gold"></div>
+      <span class="legend-label">Victim</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot red"></div>
+      <span class="legend-label">Convicted</span>
+    </div>
+  </div>
+
+  <div class="usage-instructions">
+    <div class="usage-title">How to Navigate</div>
+    <div class="usage-item">
+      <strong>Hover</strong> over a person to highlight them
+    </div>
+    <div class="usage-item">
+      <strong>Click</strong> on a person to view their profile
+    </div>
+    <div class="usage-item">
+      <kbd>←</kbd> <kbd>→</kbd> Navigate between people
+    </div>
+    <div class="usage-item">
+      <kbd>L</kbd> Lock/unlock focus on a person
+    </div>
+    <div class="usage-item">
+      <kbd>Esc</kbd> Reset the view
+    </div>
+    <div class="usage-item">
+      <strong>Drag</strong> the canvas to pan around
+    </div>
+  </div>
+</section>
+
 <section class="canvas-section">
-  
+  <div class="tour-controls">
+    <button class="tour-btn" id="startTour">▶ Guided Tour</button>
+    <div class="tour-progress" id="tourProgress">
+      <span class="tour-step" id="tourStep">1 / 5</span>
+      <div class="tour-nav">
+        <button id="tourPrev">←</button>
+        <button id="tourNext">→</button>
+      </div>
+      <button id="tourEnd" style="margin-left: 8px; font-size: 0.6rem;">✕</button>
+    </div>
+  </div>
 <div class="interaction-hint">
   <span class="hint-icon"></span>
   <span>Hover to Reveal Profile</span>
@@ -1283,7 +1142,7 @@ body{
    
       <div class="person" data-id="harvey" data-index="0" style="left: 80px; top: 200px;">
         <div class="person-photo">
-          <img src="harvey.jpg" onerror="this.style.opacity='0'">
+          <img src="images/harvey.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1294,7 +1153,7 @@ body{
       
       <div class="person convicted" data-id="donna" data-index="1" style="left: 200px; top: 200px;">
         <div class="person-photo">
-          <img src="donna.jpg" onerror="this.style.opacity='0'">
+          <img src="images/donna.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1306,7 +1165,7 @@ body{
       
       <div class="person" data-id="rob" data-index="4" style="left: 20px; top: 620px;">
         <div class="person-photo">
-          <img src="rob.jpg" onerror="this.style.opacity='0'">
+          <img src="images/rob.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1317,7 +1176,7 @@ body{
 
       <div class="person convicted" data-id="charlie" data-index="2" style="left: 140px; top: 620px;">
         <div class="person-photo">
-          <img src="charlie.jpg" onerror="this.style.opacity='0'">
+          <img src="images/charlie.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1329,7 +1188,7 @@ body{
       
       <div class="person" data-id="wendi" data-index="3" style="left: 260px; top: 620px;">
         <div class="person-photo">
-          <img src="wendi.jpg" onerror="this.style.opacity='0'">
+          <img src="images/wendi.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1341,7 +1200,7 @@ body{
       
       <div class="person" data-id="phil" data-index="5" style="left: 385px; top: 200px;">
         <div class="person-photo">
-          <img src="phil.jpg" onerror="this.style.opacity='0'">
+          <img src="images/phil.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1352,7 +1211,7 @@ body{
       
       <div class="person" data-id="ruth" data-index="6" style="left: 505px; top: 200px;">
         <div class="person-photo">
-          <img src="ruth.jpg" onerror="this.style.opacity='0'">
+          <img src="images/ruth.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1363,7 +1222,7 @@ body{
       
       <div class="person victim" data-id="dan" data-index="7" style="left: 385px; top: 620px;">
         <div class="person-photo">
-          <img src="dan.jpg" onerror="this.style.opacity='0'">
+          <img src="images/dan-back.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1373,22 +1232,12 @@ body{
         </div>
       </div>
       
-   <div class="person" data-id="shelly" data-index="8" style="left: 505px; top: 620px;">
-  <div class="person-photo">
-<img src="shelly.jpg">
-    <div class="person-indicator"></div>
-  </div>
-  <div class="person-info">
-    <div class="person-name">Shelly Markel</div>
-    <div class="person-role">Sister</div>
-  </div>
-</div>
-
+   
       
       
-      <div class="person convicted" data-id="magbanua" data-index="9" style="left: 630px; top: 510px;">
+      <div class="person convicted" data-id="magbanua" data-index="11" style="left: 630px; top: 510px;">
         <div class="person-photo">
-          <img src="magbanua.jpg" onerror="this.style.opacity='0'">
+          <img src="images/magbanua.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1398,9 +1247,9 @@ body{
         </div>
       </div>
       
-    <div class="person convicted" data-id="garcia" data-index="10" style="left: 770px; top: 200px;">
+      <div class="person convicted" data-id="garcia" data-index="12" style="left: 770px; top: 200px;">
         <div class="person-photo">
-          <img src="garcia.jpg" onerror="this.style.opacity='0'">
+          <img src="images/garcia.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1410,9 +1259,9 @@ body{
         </div>
       </div>
       
-      <div class="person" data-id="rivera" data-index="11" style="left: 920px; top: 510px;">
+      <div class="person" data-id="rivera" data-index="13" style="left: 920px; top: 510px;">
         <div class="person-photo">
-          <img src="rivera.jpg" onerror="this.style.opacity='0'">
+          <img src="images/rivera.jpg" onerror="this.style.opacity='0'">
           <div class="person-indicator"></div>
         </div>
         <div class="person-info">
@@ -1654,7 +1503,7 @@ let isLocked = false;
 let currentPerson = null;
 let currentIndex = -1;
 const people = Array.from(document.querySelectorAll('.person'));
-const peopleIds = ['harvey','donna','charlie','wendi','rob','phil','ruth','dan','shelly','magbanua','garcia','rivera'];
+const peopleIds = ['harvey','donna','charlie','wendi','rob','phil','ruth','dan','shelly','lincoln','benjamin','magbanua','garcia','rivera'];
 
 // Tour state
 let tourActive = false;
@@ -1780,6 +1629,7 @@ function zoomTo(person, lock = false) {
   if (!photo) return;
 
   // 1. FORCE SCROLL: Auto-scroll to the map so it's visible
+  document.querySelector('.canvas-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
 
   const photoCenterX = person.offsetLeft + (photo.offsetWidth / 2);
   const photoCenterY = person.offsetTop + (photo.offsetHeight / 2);
@@ -1814,29 +1664,29 @@ function resetZoom() {
   const vw = viewport.offsetWidth;
   const vh = viewport.offsetHeight;
 
-  // TIGHTER BOUNDS (match where your nodes actually live)
+  // Bounds for much taller, more vertical tree layout
   const contentMinX = 0;
-  const contentMinY = 0;
-  const contentMaxX = 1120;
-  const contentMaxY = 840;
-
-  const contentWidth  = contentMaxX - contentMinX;
+  const contentMaxX = 1100;
+  const contentMinY = 0; 
+  const contentMaxY = 1150; // Bottom children at 1000 + 150 for labels
+  
+  const contentWidth = contentMaxX - contentMinX;
   const contentHeight = contentMaxY - contentMinY;
-
-  const pad = 24;
-  const scale = Math.min(
-    (vw - pad * 2) / contentWidth,
-    (vh - pad * 2) / contentHeight
-  );
-
-  const centerX = (contentMinX + contentMaxX) / 2;
-  const centerY = (contentMinY + contentMaxY) / 2;
-
-  const offsetX = (vw / 2) - (centerX * scale);
-  const offsetY = (vh / 2) - (centerY * scale);
-
+  
+  const scaleX = vw / contentWidth;
+  const scaleY = vh / contentHeight;
+  
+  // 1.02x for safe, conservative scaling that keeps all content visible
+  const scale = Math.min(scaleX, scaleY) * 1.02;
+  
+  const treeCenterPointX = (contentMinX + contentMaxX) / 2;
+  const treeCenterPointY = (contentMinY + contentMaxY) / 2;
+  
+  const offsetX = (vw / 2) - (treeCenterPointX * scale);
+  const offsetY = (vh / 2) - (treeCenterPointY * scale);
+  
   tree.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
-
+  
   tree.classList.remove('focused', 'locked');
   people.forEach(p => p.classList.remove('active'));
   isLocked = false;
@@ -1845,7 +1695,6 @@ function resetZoom() {
   closeBtn.classList.remove('visible');
   keyboardHint.classList.remove('hidden');
 }
-
 
 // Show info panel
 function showInfo(id) {
@@ -1921,22 +1770,21 @@ function startTour() {
   tourActive = true;
   tourStep = 0;
   document.getElementById('startTour').classList.add('active');
-document.getElementById('tourProgress')?.classList.add('visible');
+  document.getElementById('tourProgress').classList.add('visible');
   goToTourStep(0);
 }
 
 function endTour() {
   tourActive = false;
   document.getElementById('startTour').classList.remove('active');
-document.getElementById('tourProgress')?.classList.remove('visible');
+  document.getElementById('tourProgress').classList.remove('visible');
   resetZoom();
   hideInfo();
 }
 
 function goToTourStep(step) {
   tourStep = step;
-const stepEl = document.getElementById('tourStep');
-if (stepEl) stepEl.textContent = `${step + 1} / ${tourStops.length}`;
+  document.getElementById('tourStep').textContent = `${step + 1} / ${tourStops.length}`;
   const person = document.querySelector(`[data-id="${tourStops[step]}"]`);
   if (person) {
     zoomTo(person, true);
@@ -2029,22 +1877,13 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Tour controls
-// Tour controls (safe even if some buttons aren't in the DOM)
-const startTourBtn = document.getElementById('startTour');
-startTourBtn?.addEventListener('click', () => {
+document.getElementById('startTour').addEventListener('click', () => {
   if (tourActive) endTour();
   else startTour();
 });
-
-document.getElementById('tourPrev')?.addEventListener('click', () =>
-  goToTourStep(Math.max(tourStep - 1, 0))
-);
-
-document.getElementById('tourNext')?.addEventListener('click', () =>
-  goToTourStep(Math.min(tourStep + 1, tourStops.length - 1))
-);
-
-document.getElementById('tourEnd')?.addEventListener('click', endTour);
+document.getElementById('tourPrev').addEventListener('click', () => goToTourStep(Math.max(tourStep - 1, 0)));
+document.getElementById('tourNext').addEventListener('click', () => goToTourStep(Math.min(tourStep + 1, tourStops.length - 1)));
+document.getElementById('tourEnd').addEventListener('click', endTour);
 
 // Click outside to reset
 document.querySelector('.tree-viewport').addEventListener('click', (e) => {
@@ -2056,36 +1895,28 @@ document.querySelector('.tree-viewport').addEventListener('click', (e) => {
 });
 
 // Initialize
-function syncHeroHeight(){
-  const hero = document.querySelector('.hero');
-  if(!hero) return;
-  document.documentElement.style.setProperty('--heroH', hero.offsetHeight + 'px');
-}
-
-// Initialize
 function init() {
-  if (history.scrollRestoration) history.scrollRestoration = 'manual';
+  // Prevent browser from remembering scroll position on refresh
+  if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+  }
   window.scrollTo(0, 0);
 
-  syncHeroHeight();     // ✅ add this first so canvas top is correct
   drawConnections();
   resetZoom();
   animateEntrance();
 }
 
 window.addEventListener('load', init);
-
 window.addEventListener('resize', () => {
-  syncHeroHeight();     // ✅ update hero height on resize
   drawConnections();
-
+  // Responsive resize handler
   if (isLocked && currentPerson) {
     zoomTo(currentPerson, true);
   } else if (!tourActive) {
     resetZoom();
   }
 });
-
 </script>
 <script>
   // Expand/collapse evidence packets
@@ -2312,7 +2143,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setTab('overview');
 });
 </script>
-
 
 </body>
 </html>
