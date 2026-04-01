@@ -1539,14 +1539,15 @@ function drawConnections() {
   const harvey = getPos('harvey'), donna = getPos('donna');
   if (harvey && donna) lines += line(harvey.cx, harvey.cy, donna.cx, donna.cy, 'marriage');
   
-  const phil = getPos('phil'), ruth = getPos('ruth');
-  if (phil && ruth) lines += line(phil.cx, phil.cy, ruth.cx, ruth.cy, 'marriage');
-  
-  const wendi = getPos('wendi'), dan = getPos('dan');
-  if (wendi && dan) {
-    lines += line(wendi.cx, wendi.cy, dan.cx, dan.cy, 'marriage');
-    lines += node((wendi.cx + dan.cx) / 2, (wendi.cy + dan.cy) / 2);
-  }
+// Markel family tree
+if (phil && ruth && dan) {
+  const parentMid = (phil.cx + ruth.cx) / 2;
+  const junctionY = 410;
+  lines += line(parentMid, phil.bottom + 10, parentMid, junctionY);
+  lines += node(parentMid, junctionY);
+  lines += line(parentMid, junctionY, dan.cx, junctionY); // ← horizontal bridge to Dan's column
+  lines += line(dan.cx, junctionY, dan.cx, dan.top);       // ← drop down to Dan
+}
   
   // Adelson family tree
   const charlie = getPos('charlie'), rob = getPos('rob');
