@@ -1565,18 +1565,14 @@ function drawConnections() {
     const maxX = Math.max(rob.cx, charlie.cx, wendi.cx);
     lines += line(minX, junctionY, maxX, junctionY);
   }
-  
-  // Markel family tree
-  const shelly = getPos('shelly');
-  if (phil && ruth && dan && shelly) {
-    const parentMid = (phil.cx + ruth.cx) / 2;
-    const junctionY = 410;
-    lines += line(parentMid, phil.bottom + 10, parentMid, junctionY);
-    lines += node(parentMid, junctionY);
-    lines += line(dan.cx, junctionY, shelly.cx, junctionY);
-    lines += line(dan.cx, junctionY, dan.cx, dan.top);
-    lines += line(shelly.cx, junctionY, shelly.cx, shelly.top);
-  }
+// Markel family tree
+if (phil && ruth && dan) {
+  const parentMid = (phil.cx + ruth.cx) / 2;
+  const junctionY = 410;
+  lines += line(parentMid, phil.bottom + 10, parentMid, junctionY);
+  lines += node(parentMid, junctionY);
+  lines += line(dan.cx, junctionY, dan.cx, dan.top);
+}
   
   
   // Conspiracy lines
