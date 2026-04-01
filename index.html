@@ -1514,7 +1514,6 @@ function drawConnections() {
     const el = document.querySelector(`[data-id="${id}"]`);
     if (!el) return null;
     const photo = el.querySelector('.person-photo');
-    const w = photo.offsetWidth;
     const h = photo.offsetHeight;
     return {
       cx: el.offsetLeft + el.offsetWidth / 2,
@@ -1530,38 +1529,33 @@ function drawConnections() {
     return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${cls}"/>`;
   }
   
-  // This function must exist to prevent errors, but returning '' makes the dots invisible
-  function node(x, y) {
-    return ''; 
-  }
+  function node(x, y) { return ''; }
   
   // Marriages
   const harvey = getPos('harvey'), donna = getPos('donna');
   if (harvey && donna) lines += line(harvey.cx, harvey.cy, donna.cx, donna.cy, 'marriage');
-  
 
-  
+  const phil = getPos('phil'), ruth = getPos('ruth');
+  if (phil && ruth) lines += line(phil.cx, phil.cy, ruth.cx, ruth.cy, 'marriage');
+
+  const wendi = getPos('wendi');
+
   // Adelson family tree
   const charlie = getPos('charlie'), rob = getPos('rob');
   if (harvey && donna && charlie && wendi && rob) {
     const parentMid = (harvey.cx + donna.cx) / 2;
     const junctionY = 410;
     lines += line(parentMid, harvey.bottom + 10, parentMid, junctionY);
-    lines += node(parentMid, junctionY);
-    
-    // Connect to children: Rob, Charlie, Wendi
     lines += line(charlie.cx, junctionY, charlie.cx, charlie.top);
     lines += line(wendi.cx, junctionY, wendi.cx, wendi.top);
     lines += line(rob.cx, junctionY, rob.cx, rob.top);
-    // Horizontal connector
     const minX = Math.min(rob.cx, charlie.cx, wendi.cx);
     const maxX = Math.max(rob.cx, charlie.cx, wendi.cx);
     lines += line(minX, junctionY, maxX, junctionY);
   }
-// Markel family tree
-  const phil = getPos('phil'), ruth = getPos('ruth'), dan = getPos('dan');
-  const philRuthMarriage = getPos('phil');
-  if (phil && ruth) lines += line(phil.cx, phil.cy, ruth.cx, ruth.cy, 'marriage');
+
+  // Markel family tree
+  const dan = getPos('dan');
   if (phil && ruth && dan) {
     const parentMid = (phil.cx + ruth.cx) / 2;
     const junctionY = 410;
@@ -1573,26 +1567,20 @@ function drawConnections() {
   // Conspiracy lines
   const magbanua = getPos('magbanua'), garcia = getPos('garcia'), rivera = getPos('rivera');
   
-  if (donna && charlie) {
-    // Donna to Charlie (Mastermind) - connect fully with no gap
+  if (donna && charlie)
     lines += line(donna.cx, donna.bottom + 10, charlie.cx + 20, charlie.top, 'conspiracy');
-  }
   
-  if (charlie && magbanua) {
-    // Charlie to Magbanua (Money Flow) - connect edge to edge with no gap
+  if (charlie && magbanua)
     lines += line(charlie.cx + 62.5, charlie.cy, magbanua.cx - 62.5, magbanua.cy, 'conspiracy');
-  }
   
   if (magbanua && garcia) {
-    // Magbanua to Garcia - bent line extending to bottom of Garcia
     lines += line(magbanua.cx, magbanua.top, magbanua.cx, garcia.bottom, 'conspiracy');
     lines += line(magbanua.cx, garcia.bottom, garcia.cx, garcia.bottom, 'conspiracy');
   }
   
   if (garcia && rivera) {
-    // Partners - bent line extending to edges
-    const garciaRight = garcia.cx + 62.5; // Right edge of Garcia
-    const riveraLeft = rivera.cx - 62.5;  // Left edge of Rivera
+    const garciaRight = garcia.cx + 62.5;
+    const riveraLeft = rivera.cx - 62.5;
     const midX = (garciaRight + riveraLeft) / 2;
     lines += line(garciaRight, garcia.cy, midX, garcia.cy, 'conspiracy');
     lines += line(midX, garcia.cy, midX, rivera.cy, 'conspiracy');
@@ -1601,11 +1589,6 @@ function drawConnections() {
   
   svg.innerHTML = lines;
 }
-
-// Zoom to person (Fixed: Auto-scrolls and clears header)
-function zoomTo(person, lock = false) {
-  const photo = person.querySelector('.person-photo');
-  if (!photo) return;
 
   // 1. FORCE SCROLL: Auto-scroll to the map so it's visible
   document.querySelector('.canvas-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
